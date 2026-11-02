@@ -1,0 +1,82 @@
+# Скопируйте в providers.yaml и оставьте нужных провайдеров.
+#
+# type:        openai    - OpenAI и любые OpenAI-совместимые API (DeepSeek, Qwen, Kimi, GLM, OpenRouter, Ollama…)
+#              anthropic - Anthropic Messages API
+# base_url:    адрес API (для официальных OpenAI/Anthropic можно не указывать)
+# api_key_env: имя переменной из .env, где лежит ключ
+# include:     regex-фильтры: показывать только подходящие модели (необязательно)
+# exclude:     regex-фильтры: скрыть модели. Для type=openai по умолчанию скрыты
+#              embedding / tts / whisper / dall-e / moderation и т.п.
+# models:      параметры моделей: context - окно контекста в токенах,
+#              price_in / price_out - цена в $ за 1M входных / выходных токенов.
+#              Модели отсюда показываются, даже если API не отдаёт список /models.
+#              Цены ниже - пример, сверяйтесь с актуальным прайсом провайдера.
+
+defaults:
+  context: 32000            # окно, если неизвестно ни из конфига, ни из API
+  max_output_tokens: 4096   # лимит ответа (обязателен для Anthropic)
+  request_timeout: 120      # секунды
+
+providers:
+  - name: gemini
+    type: openai
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai/
+    api_key_env: GEMINI_API_KEY
+    include: ["gemini"]
+    exclude: ["embedding", "imagen", "veo", "tts", "image", "live", "audio", "aqa", "transcribe",
+              "computer-use", "customtools", "banana", "robotics"]
+
+  - name: groq
+    type: openai
+    base_url: https://api.groq.com/openai/v1
+    api_key_env: GROQ_API_KEY
+    exclude: ["whisper", "tts", "guard", "orpheus", "playai"]
+
+  - name: ollama
+    type: openai
+    base_url: https://ollama.com/v1          # Ollama Cloud; для локального: http://host.docker.internal:11434/v1
+    api_key_env: OLLAMA_API_KEY
+  - name: openai
+    type: openai
+    api_key_env: OPENAI_API_KEY
+    include: ["^gpt-", "^o\\d", "^chatgpt-"]
+    models:
+      gpt-4o-mini:
+        context: 128000
+        price_in: 0.15
+        price_out: 0.60
+
+  - name: anthropic
+    type: anthropic
+    api_key_env: ANTHROPIC_API_KEY
+
+  - name: deepseek
+    type: openai
+    base_url: https://api.deepseek.com/v1
+    api_key_env: DEEPSEEK_API_KEY
+    models:
+      deepseek-chat:
+        context: 64000
+
+  - name: qwen
+    type: openai
+    base_url: https://dashscope-intl.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY
+    include: ["^qwen"]
+
+  - name: kimi
+    type: openai
+    base_url: https://api.moonshot.ai/v1
+    api_key_env: MOONSHOT_API_KEY
+
+  - name: glm
+    type: openai
+    base_url: https://open.bigmodel.cn/api/paas/v4
+    api_key_env: ZHIPU_API_KEY
+
+  - name: openrouter
+    type: openai
+    base_url: https://openrouter.ai/api/v1
+    api_key_env: OPENROUTER_API_KEY
+    include: [":free$"]
+    exclude: ["safety", "guard"]

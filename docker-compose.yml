@@ -1,0 +1,21 @@
+services:
+  bot:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PROVIDERS_FILE: /app/providers.yaml
+      DATABASE_PATH: /app/data/bot.db
+    volumes:
+      - ./providers.yaml:/app/providers.yaml:ro
+      - bot-data:/app/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+volumes:
+  bot-data:
