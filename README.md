@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/badge/Python-3.12+-blue)
 ![aiogram](https://img.shields.io/badge/aiogram-3.x-2CA5E0)
 ![Docker](https://img.shields.io/badge/Docker-ready-blue)
-![Ruff](https://img.shields.io/badge/code%20style-ruff-D7FF64)
+![Ruff](https://github.com/MySelfZalin/anythingAI-telegram/actions/workflows/ruff.yml/badge.svg)
 
 <p align="center">
   <img src="docs/preview.png" alt="Выбор модели и ответ бота" width="820">
