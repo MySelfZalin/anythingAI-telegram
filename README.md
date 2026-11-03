@@ -7,7 +7,9 @@
 ![Docker](https://img.shields.io/badge/Docker-ready-blue)
 ![Ruff](https://img.shields.io/badge/code%20style-ruff-D7FF64)
 
-<img src="docs/screenshot.png" alt="Пример работы бота" width="420">
+<p align="center">
+  <img src="docs/preview.png" alt="Выбор модели и ответ бота" width="820">
+</p>
 
 ---
 
